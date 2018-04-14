@@ -13,18 +13,21 @@ class Node
 
     public function connectTo(Node $node, $flag = true)
     {
-        if ( !$this->stack($node) ) 
+        if ( !$this->stack($node) ) {
             $this->stack[] = $node;
+        }
         
-        if ( $flag ) 
+        if ( $flag ) {
             $node->connectTo($this, false);
+        }
     }
 
     private function stack(Node $node)
     {
         foreach ( $this->stack as $i ) {
-            if ( $i->name == $node->name ) 
+            if ( $i->name == $node->name ){
                 return true; 
+            } 
         }
         
         return false;
@@ -34,8 +37,9 @@ class Node
     {
         $output = array();
         foreach ( $this->stack as $i ) {
-            if ( !in_array($i->name, $node) ) 
+            if ( !in_array($i->name, $node) ) {
                 $output[] = $i;
+            }
         }
         return $output;
     }

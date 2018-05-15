@@ -12,7 +12,7 @@
 
     for($i = 1; $i <= 9; $i++){
         if($box[$i] == 0){
-            $available[] = $box[$i];
+            $available[$i] = $box[$i];
         }
     }
     

@@ -29,4 +29,7 @@
     $returnObject->answer = $choice;
     $JSON_Object = json_encode($returnObject);
     return $JSON_Object;
+
+
+    //terima pake array yg indexnya "choice"
 ?>

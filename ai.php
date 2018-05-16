@@ -1,44 +1,42 @@
 <?php
-
     class State{
         public $value;
+        public $upperState;
         public $box = [];
         public $nextState = [];
 
-        public function __construct($box = []){
+        public function __construct($box = [], $upperState = null){
             $tempObj = new ArrayObject($box);
             $this->box = $tempObj->getArrayCopy();
-            $this->value = heuristicFunction($box);
+            $this->upperState = $upperState;
         }
-
     }
     
     class GameState{
-        public $value = -1;
         public $root;
-        
+
         public function __construct($box = []){
             $this->root = new State($box);
             buildTree($box, $root, 2, true);
         }
         // 1 = AI, 2 = PLAYER
-        public function buildTree($box = [], $currentNode, $level = 2, $turn = true){
+        public function buildTree($box = [], $currentState, $level = 2, $turn = true){
             if ($level != 0 && checkState($box)) {
                 for ($i=1; $i < 10; $i++) { 
                     if($box[$i] === 0 && $turn){
                         $box[$i] = 1;
-                        $currentNode->nextState[] = new State($box);
-                        buildTree($box, end($currentNode->nextState), $level--, false);
+                        $currentState->nextState[] = new State($box, $currentState);
+                        buildTree($box, end($currentState->nextState), $level--, false);
                     }
                     else if ($box[$i] === 0 && !$turn){
                         $box[$i] = 2;
-                        $currentNode->nextState = new State($box);
-                        buildTree($box, end($currentNode->nextState), $level--, true);
+                        $currentState->nextState = new State($box, $currentState);
+                        buildTree($box, end($currentState->nextState), $level--, true);
                     }
                 }
             }
             else{
-                $currentNode->value = heuristicFunction(box);
+                $currentState->value = heuristicFunction(box);
             }
         }
 
@@ -48,8 +46,45 @@
             }
             return false;
         }
+
+        //State function
+        protected function hasNextState($state){
+            if(empty($state->nextState)){
+                return false;
+            }
+            else{
+                return true;
+            }
+        }
+
+        public function minFunction($currentState){
+            if(!hasNextState($currentState)){
+                return $currentState->value;
+            }
+            else{
+                $v = 9999;
+                foreach ($currentState->nextState as $nState) {
+                    $v = min($v,maxFunction($nState));
+                }
+                return $v;
+            }
+        }
+
+        public function maxFunction($currentState){
+            if(!hasNextState($currentState)){
+                return $currentState->value;
+            }
+            else{
+                $v = -9999;
+                foreach ($currentState->nextState as $nState) {
+                    $v = max($v,minFunction($nState));
+                }
+                return $v;
+            }
+        }
         
         public function getChoice(){
+            
             
             return $choice;
         }
@@ -68,16 +103,10 @@
         $box[$i] = $_POST["b$i"];
     }
 
-    for($i = 1; $i <= 9; $i++){
-        if($box[$i] == 0){
-            $available[$i] = $box[$i];
-        }
-    }
-
     $returnObject = array(
         answer => $answer
     );
-    
+
     $JSON_Object = json_encode($returnObject);
     return $JSON_Object;
 

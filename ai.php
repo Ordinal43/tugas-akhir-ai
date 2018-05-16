@@ -11,25 +11,19 @@
             $this->value = heuristicFunction($box);
         }
 
-        protected function heuristicFunction($box){
-            $value = 0;
-
-            //insert your fucking heuristic function here...
-            
-            return $value;
-        }
     }
-
+    
     class GameState{
         public $value = -1;
         public $root;
-
+        
         public function __construct($box = []){
             $this->root = new State($box);
+            buildTree($box, $root, 2, true);
         }
-
+        // 1 = AI, 2 = PLAYER
         public function buildTree($box = [], $currentNode, $level = 2, $turn = true){
-            if ($level != 0) {
+            if ($level != 0 && checkState($box)) {
                 for ($i=1; $i < 10; $i++) { 
                     if($box[$i] === 0 && $turn){
                         $box[$i] = 1;
@@ -43,21 +37,35 @@
                     }
                 }
             }
+            else{
+                $currentNode->value = heuristicFunction(box);
+            }
         }
 
+        public function checkState($box){
+            for ($i=1; $i < 10; $i++) { 
+                if($box[$i] == 0) return true;
+            }
+            return false;
+        }
+        
         public function getChoice(){
-
-            //insert minmax function
-
+            
             return $choice;
         }
 
+        protected function heuristicFunction($box){
+            $value = 0;
+    
+            //insert your fucking heuristic function here...
+            
+            return $value;
+        }
+        
     }
-
+    
     for($i = 1; $i <=9; $i++){
-        $name = "\$_POST[\'b".$i."\']";
-
-        $box[$i] = $$name;
+        $box[$i] = $_POST["b$i"];
     }
 
     for($i = 1; $i <= 9; $i++){
@@ -66,7 +74,10 @@
         }
     }
 
-    $returnObject->answer = $choice;
+    $returnObject = array(
+        answer => $answer
+    );
+    
     $JSON_Object = json_encode($returnObject);
     return $JSON_Object;
 

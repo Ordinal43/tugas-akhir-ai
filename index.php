@@ -55,19 +55,19 @@
     <div class="container text-center mt-4">
         <table class="box text-center">
             <tr>
-                <td><label for="b1"></label></td>
-                <td><label for="b2"></label></td>
-                <td><label for="b3"></label></td>
+                <td><label for="b1" id="a1"></label></td>
+                <td><label for="b2" id="a2"></label></td>
+                <td><label for="b3" id="a3"></label></td>
             </tr>
             <tr>
-                <td><label for="b4"></label></td>
-                <td><label for="b5"></label></td>
-                <td><label for="b6"></label></td>
+                <td><label for="b4" id="a4"></label></td>
+                <td><label for="b5" id="a5"></label></td>
+                <td><label for="b6" id="a6"></label></td>
             </tr>
             <tr>
-                <td><label for="b7"></label></td>
-                <td><label for="b8"></label></td>
-                <td><label for="b9"></label></td>
+                <td><label for="b7" id="a7"></label></td>
+                <td><label for="b8" id="a8"></label></td>
+                <td><label for="b9" id="a9"></label></td>
             </tr>
         </table>
 
@@ -81,7 +81,6 @@
             <input class="input" type="text" value="0" name="b7" id="b7">
             <input class="input" type="text" value="0" name="b8" id="b8">
             <input class="input" type="text" value="0" name="b9" id="b9">
-            <button type="button" class="btn btn-outline-primary" name="turn" id="turn">Finish turn</button>
         </form>
     </div>
 </body>
@@ -89,17 +88,29 @@
 $(document).ready(function () {
     $(".input").hide();
     $(".input").on("click", function () {
-        $(this).val("1");
-        $(this).siblings().val("0").removeClass("selected");
+        if($(this).val()=="0"){
+          $(this).val("1");
+          $(this).siblings().val("0").removeClass("selected");
+          var string = { "b1":$("#b1").val(), "b2":$("#b2").val(), "b3":$("#b3").val(), "b4":$("#b4").val(), "b5":$("#b5").val(), "b6":$("#b6").val(), "b7":$("#b7").val(), "b8":$("#b8").val(), "b9":$("#b9").val()};
+          $.ajax({
+              type: "post",
+              url: "ai.php",
+              data: string,
+              success: function (response) {
+                  alert(response);
+              }
+          });
+        }
     });
 
     $("label").on("click", function (){
         $(this).addClass("selected").siblings().removeClass("selected");
+        //$("#a1").addClass("selected-enemy");
     });
     
-    $("#turn").on("click", function (e) {
+    /*$("#turn").on("click", function (e) {
         e.preventDefault();
-        var string = { "1":$("#b1").val(), "2":$("#b2").val(), "3":$("#b3").val(), "4":$("#b4").val(), "5":$("#b5").val(), "6":$("#b6").val(), "7":$("#b7").val(), "8":$("#b8").val(), "9":$("#b9").val()};
+        var string = { "b1":$("#b1").val(), "b2":$("#b2").val(), "b3":$("#b3").val(), "b4":$("#b4").val(), "b5":$("#b5").val(), "b6":$("#b6").val(), "b7":$("#b7").val(), "b8":$("#b8").val(), "b9":$("#b9").val()};
         $.ajax({
             type: "post",
             url: "index.php",
@@ -108,7 +119,7 @@ $(document).ready(function () {
                 alert("success");
             }
         });
-    });
+    });*/
 });
 </script>
 </html>

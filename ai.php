@@ -133,21 +133,21 @@
         
     }
     
-    // for($i = 1; $i <=9; $i++){
-    //     $box[$i] = $_POST["b$i"];
-    // }
+    for($i = 1; $i <=9; $i++){
+        $box[$i] = $_POST["b$i"];
+    }
 
-    $box = Array(
-        '1' => 0,
-        '2' => 1,
-        '3' => 0,
-        '4' => 0,
-        '5' => 0,
-        '6' => 0,
-        '7' => 0,
-        '8' => 0,
-        '9' => 0,
-    );
+    // $box = Array(
+    //     '1' => 0,
+    //     '2' => 1,
+    //     '3' => 0,
+    //     '4' => 0,
+    //     '5' => 0,
+    //     '6' => 0,
+    //     '7' => 0,
+    //     '8' => 0,
+    //     '9' => 0,
+    // );
 
     $gs = new Gamestate($box);
     // p    rint_r($gs);
@@ -159,8 +159,8 @@
 
 
     $JSON_Object = json_encode($returnObject);
-    print_r($JSON_Object);
-    // return $JSON_Object;
+    // print_r($JSON_Object);
+    return $JSON_Object;
 
 
     //terima pake array yg indexnya "choice"

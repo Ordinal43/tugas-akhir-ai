@@ -36,7 +36,7 @@
                 }
             }
             else{
-                $currentState->value = heuristicFunction(box);
+                $currentState->value = heuristicFunction($box);
             }
         }
 
@@ -62,11 +62,11 @@
                 return $currentState->value;
             }
             else{
-                $v = 9999;
+                $currentState->value = 9999;
                 foreach ($currentState->nextState as $nState) {
-                    $v = min($v,maxFunction($nState));
+                    $currentState->value = min($currentState->value,maxFunction($nState));
                 }
-                return $v;
+                return $currentState->value;
             }
         }
 
@@ -84,9 +84,12 @@
         }
         
         public function getChoice(){
-            
-            
-            return $choice;
+            $this->root->value = minFunction($this->root);
+            foreach ($this->$root->nextState as $data) {
+                if($this->root->value == $data->value) {
+                    return $data;
+                }
+            }
         }
 
         protected function heuristicFunction($box){
@@ -130,8 +133,11 @@
         $box[$i] = $_POST["b$i"];
     }
 
+    $gs = new Gamestate($box);
+    $nextGameState = $gs->getChoice();
+
     $returnObject = array(
-        answer => $answer
+        'nextGameState' => $nextGameState
     );
 
     $JSON_Object = json_encode($returnObject);

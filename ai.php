@@ -75,11 +75,11 @@
                 return $currentState->value;
             }
             else{
-                $v = -9999;
+                $currentState->value = -9999;
                 foreach ($currentState->nextState as $nState) {
-                    $v = max($v,minFunction($nState));
+                    $currentState->value = max($$currentState->value,minFunction($nState));
                 }
-                return $v;
+                return $currentState->value;
             }
         }
         

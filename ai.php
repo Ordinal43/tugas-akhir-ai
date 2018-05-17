@@ -1,45 +1,49 @@
 <?php
     class State{
         public $value;
-        public $upperState;
-        public $box = [];
-        public $nextState = [];
+        public $box;
+        public $nextState;
 
-        public function __construct($box = [], $upperState = null){
+        public function __construct($box = []){
             $tempObj = new ArrayObject($box);
             $this->box = $tempObj->getArrayCopy();
-            $this->upperState = $upperState;
+            $this->nextState = Array();
+        }
+
+        public function addState($box){
+            $temp = new State($box);
+            array_push($this->nextState, $temp);
         }
     }
     
     class GameState{
         public $root;
-
+        // 1 = AI, 2 = PLAYER
+        
         public function __construct($box = []){
             $this->root = new State($box);
-            buildTree($box, $root, 2, true);
+            $this->buildTree($box, $this->root, 2, true);
         }
-        // 1 = AI, 2 = PLAYER
+        
         public function buildTree($box = [], $currentState, $level = 2, $turn = true){
-            if ($level != 0 && checkState($box)) {
+            if ($level != 0 && $this->checkState($box)) {
                 for ($i=1; $i < 10; $i++) { 
                     if($box[$i] === 0 && $turn){
                         $box[$i] = 1;
-                        $currentState->nextState[] = new State($box, $currentState);
-                        buildTree($box, end($currentState->nextState), $level--, false);
+                        $currentState->addState($box);
+                        $this->buildTree($box, end($currentState->nextState), $level--, false);
                     }
                     else if ($box[$i] === 0 && !$turn){
                         $box[$i] = 2;
-                        $currentState->nextState = new State($box, $currentState);
-                        buildTree($box, end($currentState->nextState), $level--, true);
+                        $currentState->addState($box);
+                        $this->buildTree($box, end($currentState->nextState), $level--, true);
                     }
                 }
             }
             else{
-                $currentState->value = heuristicFunction($box);
+                $currentState->value = $this->heuristicFunction($box);
             }
         }
-
         public function checkState($box){
             for ($i=1; $i < 10; $i++) { 
                 if($box[$i] == 0) return true;
@@ -58,36 +62,36 @@
         }
 
         public function minFunction($currentState){
-            if(!hasNextState($currentState)){
+            if(!$this->hasNextState($currentState)){
                 return $currentState->value;
             }
             else{
                 $currentState->value = 9999;
                 foreach ($currentState->nextState as $nState) {
-                    $currentState->value = min($currentState->value,maxFunction($nState));
+                    $currentState->value = min($currentState->value,$this->maxFunction($nState));
                 }
                 return $currentState->value;
             }
         }
 
         public function maxFunction($currentState){
-            if(!hasNextState($currentState)){
+            if(!$this->hasNextState($currentState)){
                 return $currentState->value;
             }
             else{
                 $currentState->value = -9999;
                 foreach ($currentState->nextState as $nState) {
-                    $currentState->value = max($$currentState->value,minFunction($nState));
+                    $currentState->value = max($currentState->value,$this->minFunction($nState));
                 }
                 return $currentState->value;
             }
         }
         
         public function getChoice(){
-            $this->root->value = minFunction($this->root);
-            foreach ($this->$root->nextState as $data) {
-                if($this->root->value == $data->value) {
-                    return $data;
+            $this->root->value = $this->minFunction($this->root);
+            foreach($this->root->nextState as $data){
+                if($data->value === $this->root->value){
+                    return $data->box;
                 }
             }
         }
@@ -129,19 +133,34 @@
         
     }
     
-    for($i = 1; $i <=9; $i++){
-        $box[$i] = $_POST["b$i"];
-    }
+    // for($i = 1; $i <=9; $i++){
+    //     $box[$i] = $_POST["b$i"];
+    // }
+
+    $box = Array(
+        '1' => 0,
+        '2' => 1,
+        '3' => 0,
+        '4' => 0,
+        '5' => 0,
+        '6' => 0,
+        '7' => 0,
+        '8' => 0,
+        '9' => 0,
+    );
 
     $gs = new Gamestate($box);
+    // p    rint_r($gs);
     $nextGameState = $gs->getChoice();
 
     $returnObject = array(
         'nextGameState' => $nextGameState
     );
 
+
     $JSON_Object = json_encode($returnObject);
-    return $JSON_Object;
+    print_r($JSON_Object);
+    // return $JSON_Object;
 
 
     //terima pake array yg indexnya "choice"

@@ -91,9 +91,36 @@
 
         protected function heuristicFunction($box){
             $value = 0;
-    
-            //insert your fucking heuristic function here...
-            
+            //cek vertical
+            for($i = 1; $i <=3; $i++){
+                $cek=0;
+                for($j = 0; $j <=6; $j+=3){
+                    if($box[$i+$j]==2) $cek=1;
+                    if($box[$i+$j]==1) break;
+                    if($j==6 && $cek==1) $value++;
+                }
+            }
+            //cek horizontal
+            for($i = 1; $i<=7; $i+=3){
+                $cek=0;
+                for($j = 0; $j <=2; $j++){
+                    if($box[$i+$j]==2) $cek=1;
+                    if($box[$i+$j]==1) break;
+                    if($j==2 && $cek==1) $value++;
+                }
+            }
+            //cek diagonal1
+            for($i = 1; $i<=9; $i+=4){
+                if($box[$i]==2) $cek=1;
+                if($box[$i]==1) break;
+                if($i==9 && $cek==1) $value++;
+            }
+            //cek diagonal2
+            for($i = 3; $i<=7; $i+=2){
+                if($box[$i]==2) $cek=1;
+                if($box[$i]==1) break;
+                if($i==7 && $cek==1) $value++;
+            }
             return $value;
         }
         

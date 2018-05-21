@@ -86,40 +86,75 @@
 </body>
 <script>
 $(document).ready(function () {
-    $(".input").hide();
-    $(".input").on("click", function () {
-        if($(this).val()=="0"){
-          $(this).val("1");
-          $(this).siblings().val("0").removeClass("selected");
-          var string = { "b1":$("#b1").val(), "b2":$("#b2").val(), "b3":$("#b3").val(), "b4":$("#b4").val(), "b5":$("#b5").val(), "b6":$("#b6").val(), "b7":$("#b7").val(), "b8":$("#b8").val(), "b9":$("#b9").val()};
-          $.ajax({
-              type: "post",
-              url: "ai.php",
-              data: string,
-              success: function (response) {
-                  alert(response);
-              }
-          });
+    // $(".input").hide();
+    $(".input").on("click", function(){
+        if ($(this).val() == 0){
+            $(this).val(1)
+            $(this).siblings().removeClass("selected");
+            $.ajax({
+                type: "post",
+                url: "JURUS.php",
+                data: {
+                    "b1":$("#b1").val(),
+                    "b2":$("#b2").val(),
+                    "b3":$("#b3").val(),
+                    "b4":$("#b4").val(),
+                    "b5":$("#b5").val(),
+                    "b6":$("#b6").val(),
+                    "b7":$("#b7").val(),
+                    "b8":$("#b8").val(),
+                    "b9":$("#b9").val()
+                },
+                dataType: "json",
+                success: function (response) {
+                    // alert(response.choice)
+                    switch (response.choice) {    
+                        case "b1":
+                            $("#b1").val("2");
+                            $("#a1").addClass("selected-enemy");
+                            break;
+                        case "b2":
+                            $("#b2").val("2");
+                            $("#a2").addClass("selected-enemy");
+                            break;
+                        case "b3":
+                            $("#b3").val("2");
+                            $("#a3").addClass("selected-enemy");
+                            break;
+                        case "b4":
+                            $("#b4").val("2");
+                            $("#a4").addClass("selected-enemy");
+                            break;
+                        case "b5":
+                            $("#b5").val("2");
+                            $("#a5").addClass("selected-enemy");
+                            break;
+                        case "b6":
+                            $("#b6").val("2");
+                            $("#a6").addClass("selected-enemy");
+                            break;
+                        case "b7":
+                            $("#b7").val("2");
+                            $("#a7").addClass("selected-enemy");                            
+                            break;
+                        case "b8":
+                            $("#b8").val("2");
+                            $("#a8").addClass("selected-enemy");
+                            break;
+                        case "b9":
+                            $("#b9").val("2");
+                            $("#a9").addClass("selected-enemy");
+                            break;
+                      default:
+                          break;
+                    }
+                }
+            });
         }
-    });
-
+    })
     $("label").on("click", function (){
         $(this).addClass("selected").siblings().removeClass("selected");
-        //$("#a1").addClass("selected-enemy");
     });
-    
-    /*$("#turn").on("click", function (e) {
-        e.preventDefault();
-        var string = { "b1":$("#b1").val(), "b2":$("#b2").val(), "b3":$("#b3").val(), "b4":$("#b4").val(), "b5":$("#b5").val(), "b6":$("#b6").val(), "b7":$("#b7").val(), "b8":$("#b8").val(), "b9":$("#b9").val()};
-        $.ajax({
-            type: "post",
-            url: "index.php",
-            data: string,
-            success: function (response) {
-                alert("success");
-            }
-        });
-    });*/
 });
 </script>
 </html>

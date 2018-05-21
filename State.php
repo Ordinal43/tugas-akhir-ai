@@ -32,8 +32,16 @@
             echo "<br>";echo "<br>";
         }
 
-        public function hasNextState(){
-            return !empty($this->nextState);
+        public function diff($otherState){
+            for ($i=0; $i < 9; $i++) { 
+                if($this->Array[$i] != $otherState->Array[$i]){
+                    return $i;
+                }
+            }
+        }
+
+        public function emptyNextState(){
+            return empty($this->nextState);
         }
 
         public function checkLimit(){
@@ -54,8 +62,8 @@
             for($i = 1; $i <=3; $i++){
                 $cek=0;
                 for($j = 0; $j <=6; $j+=3){
-                    if($box[$i+$j-1]==1) $cek++;
-                    if($box[$i+$j-1]==2) break;
+                    if($this->Array[$i+$j-1]==1) $cek++;
+                    if($this->Array[$i+$j-1]==2) break;
                     if($j==6){
                         if($cek==1) $value+=1;
                         else if($cek==2) $value+=10;
@@ -67,8 +75,8 @@
             for($i = 1; $i<=7; $i+=3){
                 $cek=0;
                 for($j = 0; $j <=2; $j++){
-                    if($box[$i+$j-1]==1) $cek++;
-                    if($box[$i+$j-1]==2) break;
+                    if($this->Array[$i+$j-1]==1) $cek++;
+                    if($this->Array[$i+$j-1]==2) break;
                     if($j==2){
                         if($cek==1) $value+=1;
                         else if($cek==2) $value+=10;
@@ -79,8 +87,8 @@
             //cek diagonal1 AI
             $cek=0;
             for($i = 1; $i<=9; $i+=4){
-                if($box[$i-1]==1) $cek++;
-                if($box[$i-1]==2) break;
+                if($this->Array[$i-1]==1) $cek++;
+                if($this->Array[$i-1]==2) break;
                 if($i==9){
                     if($cek==1) $value+=1;
                     else if($cek==2) $value+=10;
@@ -90,8 +98,8 @@
             //cek diagonal2 AI
             $cek=0;
             for($i = 3; $i<=7; $i+=2){
-                if($box[$i-1]==1) $cek++;
-                if($box[$i-1]==2) break;
+                if($this->Array[$i-1]==1) $cek++;
+                if($this->Array[$i-1]==2) break;
                 if($i==7){
                     if($cek==1) $value+=1;
                     else if($cek==2) $value+=10;
@@ -104,8 +112,8 @@
             for($i = 1; $i <=3; $i++){
                 $cek=0;
                 for($j = 0; $j <=6; $j+=3){
-                    if($box[$i+$j-1]==2) $cek++;
-                    if($box[$i+$j-1]==1) break;
+                    if($this->Array[$i+$j-1]==2) $cek++;
+                    if($this->Array[$i+$j-1]==1) break;
                     if($j==6){
                         if($cek==1) $value-=1;
                         else if($cek==2) $value-=10;
@@ -117,8 +125,8 @@
             for($i = 1; $i<=7; $i+=3){
                 $cek=0;
                 for($j = 0; $j <=2; $j++){
-                    if($box[$i+$j-1]==2) $cek++;
-                    if($box[$i+$j-1]==1) break;
+                    if($this->Array[$i+$j-1]==2) $cek++;
+                    if($this->Array[$i+$j-1]==1) break;
                     if($j==2){
                         if($cek==1) $value-=1;
                         else if($cek==2) $value-=10;
@@ -129,8 +137,8 @@
             //cek diagonal1 PLAYER
             $cek=0;
             for($i = 1; $i<=9; $i+=4){
-                if($box[$i-1]==2) $cek++;
-                if($box[$i-1]==1) break;
+                if($this->Array[$i-1]==2) $cek++;
+                if($this->Array[$i-1]==1) break;
                 if($i==9){
                     if($cek==1) $value-=1;
                     else if($cek==2) $value-=10;
@@ -140,8 +148,8 @@
             //cek diagonal2 PLAYER
             $cek=0;
             for($i = 3; $i<=7; $i+=2){
-                if($box[$i-1]==2) $cek++;
-                if($box[$i-1]==1) break;
+                if($this->Array[$i-1]==2) $cek++;
+                if($this->Array[$i-1]==1) break;
                 if($i==7){
                     if($cek==1) $value-=1;
                     else if($cek==2) $value-=10;

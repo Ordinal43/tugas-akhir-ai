@@ -9,12 +9,14 @@
         public $box;
         public $nextState;
         public $limit;
+        public $level;
         
-        public function __construct($box, $stateParent = 0){
+        public function __construct($box, $stateParent = 0, $level = 0){
             $this->$box = $box;
             $this->stateNumber = ++self::$constantStateNumber;
             $this->stateParent = $stateParent;
             $this->limit = $this->checkLimit();
+            $this->level = $level;
         }
 
         public function printState(){
@@ -22,7 +24,11 @@
             echo "<br>";
             echo "Parent State: " . $this->stateParent;
             echo "<br>";
+            echo "Child State: "; $this->printAllNextState();
+            echo "<br>";
             echo "Heuristic Value: " . $this->heuristicValue;
+            echo "<br>";
+            echo "Level: " . $this->level;
             echo "<br>";
             echo $this->Array[0] . $this->Array[1] . $this->Array[2];
             echo "<br>";
@@ -30,6 +36,14 @@
             echo "<br>";
             echo $this->Array[6] . $this->Array[7] . $this->Array[8];
             echo "<br>";echo "<br>";
+        }
+
+        public function printAllNextState(){
+            if (!$this->emptyNextState()){
+                foreach ($this->nextState as $data) {
+                    echo "$data->stateNumber ";
+                }
+            }
         }
 
         public function diff($otherState){

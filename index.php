@@ -86,7 +86,7 @@
 </body>
 <script>
 $(document).ready(function () {
-    // $(".input").hide();
+    $(".input").hide();
     $(".input").on("click", function(){
         if ($(this).val() == 0){
             $(this).val(1)

@@ -5,11 +5,12 @@
     {
         public $root;
 
-        public function __construct($box){
+        public function __construct($box, $depthBoundary = 2){
             $this->root = new State($box);
-            $this->buildTree($box, $this->root, 2, true);
+            $this->buildTree($box, $this->root, $depthBoundary, true);
         }
         public function buildTree($box, &$currentState, $level, $turn){
+            $nodeLevel = $currentState->level + 1;
             if($level > 0 && $currentState->limit){
                 // $currentState->printState();
                 if($turn){
@@ -17,7 +18,7 @@
                         if($box[$i] == 0){
                             $tempBox = $box;
                             $tempBox[$i] = 2;
-                            $currentState->nextState[] = new State($tempBox,$currentState->stateNumber);
+                            $currentState->nextState[] = new State($tempBox,$currentState->stateNumber, $nodeLevel);
                             $tempPointer = end($currentState->nextState);
                             $this->buildTree($tempBox, $tempPointer, $level - 1, false);
                         }
@@ -28,7 +29,7 @@
                         if($box[$i] == 0){
                             $tempBox = $box;
                             $tempBox[$i] = 1;
-                            $currentState->nextState[] = new State($tempBox,$currentState->stateNumber);
+                            $currentState->nextState[] = new State($tempBox,$currentState->stateNumber, $nodeLevel);
                             $tempPointer = end($currentState->nextState);
                             $this->buildTree($tempBox, $tempPointer, $level - 1, true);
                         }
@@ -80,6 +81,15 @@
             for ($i=0; $i < 9; $i++) { 
                 if($this->root->Array[$i] != $otherState->Array[$i]){
                     return $i;
+                }
+            }
+        }
+
+        public function printGameState($state){
+            $state->printState();
+            if(!$state->emptyNextState()){
+                foreach ($state->nextState as $data) {
+                    $this->printGameState($data);
                 }
             }
         }

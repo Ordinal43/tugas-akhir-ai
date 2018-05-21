@@ -4,7 +4,7 @@
     //1 = Player, 2 = AI
     
     
-    // Configuration section for Minimax Algorithm
+    // Configuration for Minimax Algorithm
     /*
         Variable:
             - $boundaryDepth    = Determine how deep the Gamestate will build the tree

@@ -1,7 +1,7 @@
 <?php 
     class State
     {
-        static $constantStateNumber = 0;
+        static $constantStateNumber = 0; // Store unique number for State Identity
         
         public $stateNumber;    // State Identity
         public $stateParent;    // Store Parent State Identity

@@ -173,24 +173,9 @@ $(document).ready(function () {
         $(this).addClass("selected").siblings().removeClass("selected");
     });
     $("#reset").on("click", function(){
-        $("#b1").val('0');
-        $("#b2").val('0');
-        $("#b3").val('0');
-        $("#b4").val('0');
-        $("#b5").val('0');
-        $("#b6").val('0');
-        $("#b7").val('0');
-        $("#b8").val('0');
-        $("#b9").val('0');
-        $("#a1").removeClass();
-        $("#a2").removeClass();
-        $("#a3").removeClass();
-        $("#a4").removeClass();
-        $("#a5").removeClass();
-        $("#a6").removeClass();
-        $("#a7").removeClass();
-        $("#a8").removeClass();
-        $("#a9").removeClass();
+        $(".input").val('0');
+        $("label").removeClass();
+        $("#debug").html("");
     })
 });
 </script>

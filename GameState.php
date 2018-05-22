@@ -3,16 +3,18 @@
 
     class GameState
     {
-        public $root;
+        public $root;   // Store root state
 
+        // Constructor
         public function __construct($box, $depthBoundary = 2){
             $this->root = new State($box);
             $this->buildTree($box, $this->root, $depthBoundary, true);
         }
+
+        // Tree Builder
         public function buildTree($box, &$currentState, $level, $turn){
             $nodeLevel = $currentState->level + 1;
             if($level > 0 && $currentState->limit){
-                // $currentState->printState();
                 if($turn){
                     for ($i=0; $i < 9; $i++) { 
                         if($box[$i] == 0){
@@ -38,45 +40,51 @@
             }
             else{
                 $currentState->setHeuristicValue();
-                // $currentState->printState();
             }
         }
 
+        // MINIMAX FUNCTION
+        // minFunction and maxFunction will be called recursively
+
+        // To get minimum value from state's nextState
         protected function minFunction($currentState){
             if($currentState->emptyNextState()){
-                return $currentState->heuristicValue;
+                return $currentState->value;
             }
             else{
-                $currentState->heuristicValue = 9999;
+                $currentState->value = 9999;
                 foreach ($currentState->nextState as $nState) {
-                    $currentState->heuristicValue = min($currentState->heuristicValue,$this->maxFunction($nState));
+                    $currentState->value = min($currentState->value,$this->maxFunction($nState));
                 }
-                return $currentState->heuristicValue;
+                return $currentState->value;
             }
         }
         
+        // To get maximum value from state's nextState
         protected function maxFunction($currentState){
             if($currentState->emptyNextState()){
-                return $currentState->heuristicValue;
+                return $currentState->value;
             }
             else{
-                $currentState->heuristicValue = -9999;
+                $currentState->value = -9999;
                 foreach ($currentState->nextState as $nState) {
-                    $currentState->heuristicValue = max($currentState->heuristicValue,$this->minFunction($nState));
+                    $currentState->value = max($currentState->value,$this->minFunction($nState));
                 }
-                return $currentState->heuristicValue;
+                return $currentState->value;
             }
         }
 
+        // To get a state that has same value with root from root's nextState 
         public function getState(){
-            $this->root->heuristicValue = $this->maxFunction($this->root);
+            $this->root->value = $this->maxFunction($this->root);
             foreach($this->root->nextState as $data){
-                if($data->heuristicValue == $this->root->heuristicValue){
+                if($data->value == $this->root->value){
                     return $data;
                 }
             }
         }
 
+        // To get optimal index choice
         public function getChoice($otherState){
             for ($i=0; $i < 9; $i++) { 
                 if($this->root->Array[$i] != $otherState->Array[$i]){
@@ -85,13 +93,23 @@
             }
         }
 
+        // toString function
         public function printGameState($state){
-            $state->printState();
+            $html = "<div>";
+            $html .= $this->printGameStateHidden($state);
+            $html .= "</div>";
+            return $html;
+        }
+
+        private function printGameStateHidden($state){
+            $html = "";
+            $html .= $state->printState();
             if(!$state->emptyNextState()){
                 foreach ($state->nextState as $data) {
-                    $this->printGameState($data);
+                    $html .= $this->printGameState($data);
                 }
             }
+            return $html;
         }
     }
 ?>

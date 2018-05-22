@@ -7,10 +7,12 @@
     // Configuration for Minimax Algorithm
     /*
         Variable:
-            - $boundaryDepth    = Determine how deep the Gamestate will build the tree
-            - $input            = Default state if user do not specify how the current state is
+            - $boundaryDepth        = Determine how deep the Gamestate will build the tree
+            - $includeDebugInJSON   = Determine whenever the program will include debug info in JSON or not
+            - $input                = Default state if user do not specify how the current state is
     */
     $boundaryDepth = 2;
+    $includeDebugInJSON = TRUE;
 
     $input = [
         '0' => 0,
@@ -52,8 +54,13 @@
     $state = $gs->getState();
     
     if ($_SERVER['REQUEST_METHOD'] == 'POST'){
+        $debug = "";
+        if($includeDebugInJSON){
+            $debug = $gs->printGameState($gs->root);
+        }
         $out = Array(
-            "choice" => b.($gs->getChoice($state)+1)
+            "choice" => b.($gs->getChoice($state)+1),
+            "debug" => $debug
         );
         //Deployment Function
         header('Content-Type: application/json');
@@ -63,6 +70,6 @@
     }
     else{
         //Debugging Function
-        $gs->printGameState($gs->root);
+        echo $gs->printGameState($gs->root);
     }
 ?>

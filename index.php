@@ -43,45 +43,60 @@
             background-repeat: no-repeat;
             background-position: center;
         }
+
+        #debug{
+            overflow-y: scroll;
+            overflow-x: hidden;
+            height: 24em;
+        }
     </style>
 </head>
 <body>
 
     <div class="jumbotron-fluid bg-light p-4">
         <div class="container">
-            <h1 class="h1">Tic Tac Toe</h1>
+            <h1 class="h1">Impossible Tic Tac Toe</h1>
         </div>
     </div>
-    <div class="container text-center mt-4">
-        <table class="box text-center">
-            <tr>
-                <td><label for="b1" id="a1"></label></td>
-                <td><label for="b2" id="a2"></label></td>
-                <td><label for="b3" id="a3"></label></td>
-            </tr>
-            <tr>
-                <td><label for="b4" id="a4"></label></td>
-                <td><label for="b5" id="a5"></label></td>
-                <td><label for="b6" id="a6"></label></td>
-            </tr>
-            <tr>
-                <td><label for="b7" id="a7"></label></td>
-                <td><label for="b8" id="a8"></label></td>
-                <td><label for="b9" id="a9"></label></td>
-            </tr>
-        </table>
+    <div class="container">
+        <div class="row">
+            <div class="col-12 col-md-6">
+                <table class="box text-center">
+                    <tr>
+                        <td><label for="b1" id="a1"></label></td>
+                        <td><label for="b2" id="a2"></label></td>
+                        <td><label for="b3" id="a3"></label></td>
+                    </tr>
+                    <tr>
+                        <td><label for="b4" id="a4"></label></td>
+                        <td><label for="b5" id="a5"></label></td>
+                        <td><label for="b6" id="a6"></label></td>
+                    </tr>
+                    <tr>
+                        <td><label for="b7" id="a7"></label></td>
+                        <td><label for="b8" id="a8"></label></td>
+                        <td><label for="b9" id="a9"></label></td>
+                    </tr>
+                </table>
 
-        <form action="index.php" method="post">
-            <input class="input" type="text" value="0" name="b1" id="b1">
-            <input class="input" type="text" value="0" name="b2" id="b2">
-            <input class="input" type="text" value="0" name="b3" id="b3">
-            <input class="input" type="text" value="0" name="b4" id="b4">
-            <input class="input" type="text" value="0" name="b5" id="b5">
-            <input class="input" type="text" value="0" name="b6" id="b6">
-            <input class="input" type="text" value="0" name="b7" id="b7">
-            <input class="input" type="text" value="0" name="b8" id="b8">
-            <input class="input" type="text" value="0" name="b9" id="b9">
-        </form>
+                <form action="index.php" method="post">
+                    <input class="input" type="text" value="0" name="b1" id="b1">
+                    <input class="input" type="text" value="0" name="b2" id="b2">
+                    <input class="input" type="text" value="0" name="b3" id="b3">
+                    <input class="input" type="text" value="0" name="b4" id="b4">
+                    <input class="input" type="text" value="0" name="b5" id="b5">
+                    <input class="input" type="text" value="0" name="b6" id="b6">
+                    <input class="input" type="text" value="0" name="b7" id="b7">
+                    <input class="input" type="text" value="0" name="b8" id="b8">
+                    <input class="input" type="text" value="0" name="b9" id="b9">
+                </form>
+            </div>
+            <div class="col-12 col-md-6">
+                <p id="debug">
+
+                </p>
+            </div>
+        </div>
     </div>
 </body>
 <script>
@@ -148,6 +163,7 @@ $(document).ready(function () {
                       default:
                           break;
                     }
+                    $("#debug").html(response.debug);
                 }
             });
         }

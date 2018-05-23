@@ -3,19 +3,19 @@
     require_once "State.php";
     //1 = Player, 2 = AI
     
-    
+
     // Configuration for Minimax Algorithm
-    /*
-        Variable:
-            - $boundaryDepth        = Determine how deep the Gamestate will build the tree
-            - $includeDebugInJSON   = Determine whenever the program will include debug info in JSON or not
-            - $input                = Default state if user do not specify how the current state is
-    */
+/*
+    Variable:
+        - $boundaryDepth        = Determine how deep the Gamestate will build the tree, for normal behavior please assign 2
+        - $includeDebugInJSON   = Determine whenever the program will include debug info in JSON or not
+        - $input                = Default state if user do not specify how the current state is
+*/
     $boundaryDepth = 2;
     $includeDebugInJSON = TRUE;
 
     $input = [
-        '0' => 0, '1' => 1, '2' => 0,
+        '0' => 0, '1' => 0, '2' => 0,
         '3' => 0, '4' => 0, '5' => 0,
         '6' => 0, '7' => 0, '8' => 0
     ];

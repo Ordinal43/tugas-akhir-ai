@@ -8,7 +8,7 @@
         public $value;          // Store State Value, whetever from it's own heuristic function or min-max
         public $box;            // mboh
         public $nextState;      // Store every next possible state
-        public $limit;          // Check whetever the board state is full
+        public $limit;          // Check whetever the board state is full or the game is ended
         public $level;          // Store state tree level
         
         // Constructor
@@ -79,6 +79,20 @@
                     break;
                 }
             }
+
+            //cek vertical
+            for ($i=0; $i < 3; $i++) { 
+                if ($this->Array[$i] == $this->Array[$i+3] && $this->Array[$i] == $this->Array[$i+6] && $this->Array[$i] != 0){
+                    return false;
+                }
+            }
+
+            for ($i=0; $i <= 6; $i+=3) { 
+                if ($this->Array[$i] == $this->Array[$i+1] && $this->Array[$i] == $this->Array[$i+2] && $this->Array[$i] != 0){
+                    return false;
+                }
+            }
+
             return $flag;;
         }
 

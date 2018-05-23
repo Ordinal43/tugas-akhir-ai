@@ -74,7 +74,7 @@
         public function checkLimit(){
             $flag = false;
             for ($i=0; $i < 9; $i++) { 
-                if($this->box[$i] == 0){
+                if($this->Array[$i] == 0){
                     $flag = true;
                     break;
                 }

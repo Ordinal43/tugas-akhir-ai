@@ -57,6 +57,7 @@
         <div class="container">
             <h1 class="h1">Impossible Tic Tac Toe</h1>
             <button id="reset" class="btn btn-primary">Reset</button>
+            <button id="second" class="btn btn-primary">Second Play</button>
         </div>
     </div>
     <div class="container">
@@ -176,6 +177,68 @@ $(document).ready(function () {
         $(".input").val('0');
         $("label").removeClass();
         $("#debug").html("");
+    })
+    $("#second").on("click", function(){
+        $.ajax({
+                type: "post",
+                url: "JURUS.php",
+                data: {
+                    "b1":$("#b1").val(),
+                    "b2":$("#b2").val(),
+                    "b3":$("#b3").val(),
+                    "b4":$("#b4").val(),
+                    "b5":$("#b5").val(),
+                    "b6":$("#b6").val(),
+                    "b7":$("#b7").val(),
+                    "b8":$("#b8").val(),
+                    "b9":$("#b9").val()
+                },
+                dataType: "json",
+                success: function (response) {
+                    // alert(response.choice)
+                    switch (response.choice) {    
+                        case "b1":
+                            $("#b1").val("2");
+                            $("#a1").addClass("selected-enemy");
+                            break;
+                        case "b2":
+                            $("#b2").val("2");
+                            $("#a2").addClass("selected-enemy");
+                            break;
+                        case "b3":
+                            $("#b3").val("2");
+                            $("#a3").addClass("selected-enemy");
+                            break;
+                        case "b4":
+                            $("#b4").val("2");
+                            $("#a4").addClass("selected-enemy");
+                            break;
+                        case "b5":
+                            $("#b5").val("2");
+                            $("#a5").addClass("selected-enemy");
+                            break;
+                        case "b6":
+                            $("#b6").val("2");
+                            $("#a6").addClass("selected-enemy");
+                            break;
+                        case "b7":
+                            $("#b7").val("2");
+                            $("#a7").addClass("selected-enemy");                            
+                            break;
+                        case "b8":
+                            $("#b8").val("2");
+                            $("#a8").addClass("selected-enemy");
+                            break;
+                        case "b9":
+                            $("#b9").val("2");
+                            $("#a9").addClass("selected-enemy");
+                            break;
+                      default:
+                          break;
+                    }
+                    $("#debug").html(response.debug);
+                }
+            });
     })
 });
 </script>

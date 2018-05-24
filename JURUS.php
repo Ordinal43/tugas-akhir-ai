@@ -1,4 +1,5 @@
 <?php 
+    error_reporting(0);
     require_once "GameState.php";
     require_once "State.php";
     //1 = Player, 2 = AI

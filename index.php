@@ -125,45 +125,55 @@ $(document).ready(function () {
                 dataType: "json",
                 success: function (response) {
                     // alert(response.choice)
-                    switch (response.choice) {    
-                        case "b1":
-                            $("#b1").val("2");
-                            $("#a1").addClass("selected-enemy");
+                    $count=0;
+                    // check if there's still an empty box
+                    for($i=1;$i<=9;$i++){
+                        if($("#b"+$i).val()=="0"){
+                            $count++;
+                        }
+                    }
+                    // if there's still an empty box left return result
+                    if($count!=0){
+                        switch (response.choice) {    
+                            case "b1":
+                                $("#b1").val("2");
+                                $("#a1").addClass("selected-enemy");
+                                break;
+                            case "b2":
+                                $("#b2").val("2");
+                                $("#a2").addClass("selected-enemy");
+                                break;
+                            case "b3":
+                                $("#b3").val("2");
+                                $("#a3").addClass("selected-enemy");
+                                break;
+                            case "b4":
+                                $("#b4").val("2");
+                                $("#a4").addClass("selected-enemy");
+                                break;
+                            case "b5":
+                                $("#b5").val("2");
+                                $("#a5").addClass("selected-enemy");
+                                break;
+                            case "b6":
+                                $("#b6").val("2");
+                                $("#a6").addClass("selected-enemy");
+                                break;
+                            case "b7":
+                                $("#b7").val("2");
+                                $("#a7").addClass("selected-enemy");                            
+                                break;
+                            case "b8":
+                                $("#b8").val("2");
+                                $("#a8").addClass("selected-enemy");
+                                break;
+                            case "b9":
+                                $("#b9").val("2");
+                                $("#a9").addClass("selected-enemy");
+                                break;
+                        default:
                             break;
-                        case "b2":
-                            $("#b2").val("2");
-                            $("#a2").addClass("selected-enemy");
-                            break;
-                        case "b3":
-                            $("#b3").val("2");
-                            $("#a3").addClass("selected-enemy");
-                            break;
-                        case "b4":
-                            $("#b4").val("2");
-                            $("#a4").addClass("selected-enemy");
-                            break;
-                        case "b5":
-                            $("#b5").val("2");
-                            $("#a5").addClass("selected-enemy");
-                            break;
-                        case "b6":
-                            $("#b6").val("2");
-                            $("#a6").addClass("selected-enemy");
-                            break;
-                        case "b7":
-                            $("#b7").val("2");
-                            $("#a7").addClass("selected-enemy");                            
-                            break;
-                        case "b8":
-                            $("#b8").val("2");
-                            $("#a8").addClass("selected-enemy");
-                            break;
-                        case "b9":
-                            $("#b9").val("2");
-                            $("#a9").addClass("selected-enemy");
-                            break;
-                      default:
-                          break;
+                        }  
                     }
                     $("#debug").html(response.debug);
                 }
@@ -180,22 +190,31 @@ $(document).ready(function () {
     })
     $("#second").on("click", function(){
         $.ajax({
-                type: "post",
-                url: "JURUS.php",
-                data: {
-                    "b1":$("#b1").val(),
-                    "b2":$("#b2").val(),
-                    "b3":$("#b3").val(),
-                    "b4":$("#b4").val(),
-                    "b5":$("#b5").val(),
-                    "b6":$("#b6").val(),
-                    "b7":$("#b7").val(),
-                    "b8":$("#b8").val(),
-                    "b9":$("#b9").val()
-                },
-                dataType: "json",
-                success: function (response) {
-                    // alert(response.choice)
+            type: "post",
+            url: "JURUS.php",
+            data: {
+                "b1":$("#b1").val(),
+                "b2":$("#b2").val(),
+                "b3":$("#b3").val(),
+                "b4":$("#b4").val(),
+                "b5":$("#b5").val(),
+                "b6":$("#b6").val(),
+                "b7":$("#b7").val(),
+                "b8":$("#b8").val(),
+                "b9":$("#b9").val()
+            },
+            dataType: "json",
+            success: function (response) {
+                // alert(response.choice)
+                $count=0;
+                // check if there's still an empty box
+                for($i=1;$i<=9;$i++){
+                    if($("#b"+$i).val()=="0"){
+                        $count++;
+                    }
+                }
+                // if there's still an empty box left return result
+                if($count != 0){
                     switch (response.choice) {    
                         case "b1":
                             $("#b1").val("2");
@@ -233,13 +252,14 @@ $(document).ready(function () {
                             $("#b9").val("2");
                             $("#a9").addClass("selected-enemy");
                             break;
-                      default:
-                          break;
+                        default:
+                            break;
                     }
-                    $("#debug").html(response.debug);
                 }
-            });
-    })
+                $("#debug").html(response.debug);
+            }
+        });
+    });
 });
 </script>
 </html>
